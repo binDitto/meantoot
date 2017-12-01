@@ -52,11 +52,11 @@ const Schema = mongoose.Schema;
 
     const usernameValidators = [
         {
-            validators: usernameLengthChecker,
+            validator: usernameLengthChecker,
             message: 'Username must be at least 3 characters long and less than 15 characters in length'
         },
         {
-            validators: validUsername,
+            validator: validUsername,
             message: 'Invalid username, username must not contain any special characters'
         }
     ];
@@ -81,11 +81,11 @@ const Schema = mongoose.Schema;
 
     const passwordValidators = [
         {
-            validators: passwordLengthChecker,
+            validator: passwordLengthChecker,
             message: 'Password must be at least 9 characters long and less than 35 characters in length'
         },
         {
-            validators: validPassword,
+            validator: validPassword,
             message: "Must contain at least: 1 uppercase, lowercase, special character, and number"
         }
     ];
