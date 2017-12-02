@@ -75,7 +75,7 @@ const Schema = mongoose.Schema;
     let validPassword = (password) => {
         if (!password) { return false; }
         const regExp = new RegExp(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/);
-        console.log('Valid pw regex: ' + regExpt.test(password));
+        console.log('Valid pw regex: ' + regExp.test(password));
         return regExp.test(password);
     };
 
