@@ -13,6 +13,7 @@ export class AuthService {
   options;
   authToken;
 
+  // Remember to also import httpmodule in appmodule to make http work.
   constructor(
     private http: Http
   ) { }
