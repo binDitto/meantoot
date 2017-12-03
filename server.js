@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //  Front-end static directory
-app.use(express.static(__dirname + 'client/dist/'));
+app.use(express.static(__dirname + '/client/dist/'));
 
 // Routes
 app.use('/authentication', auth);

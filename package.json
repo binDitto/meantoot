@@ -28,8 +28,5 @@
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.13.5"
-  },
-  "devDependencies": {
-    "@angular/cli": "^1.5.5"
   }
 }
