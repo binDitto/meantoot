@@ -103,6 +103,7 @@ const Schema = mongoose.Schema;
             bcrypt.hash(this.password, null, null, (err,hash) => {
                 if (err) return next (err);
                 this.password = hash;
+                console.log('password pre hashed');
                 next();
             });
          });
