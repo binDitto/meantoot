@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
   message;
   processing = false;
   previousUrl;
+  /* ^ records the link user was before they logged in. So we can redirect them back there when they log in.
+  look at the authguard redirecturl initialization to see where this link is coming from */
+
 
   form: FormGroup;
 
@@ -28,6 +31,7 @@ export class LoginComponent implements OnInit {
     this.createForm();
   }
 
+  // RECORD REDIRECT URL - url user was on before logging in
   ngOnInit() {
   }
 
