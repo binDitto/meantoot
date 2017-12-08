@@ -2,6 +2,8 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
+
+
 module.exports = (router) => {
 
 // REGISTER
@@ -94,8 +96,9 @@ module.exports = (router) => {
         }
 
         // Username was provided
-        User.findOne({ username: req.body.username.toLowerCase() }, ( err, user ) => {
+        User.findOne({ username: req.params.username }, ( err, user ) => {
             if (err) {
+                console.log(err);
                 return res.json({ success: false, message: err });
             }
             if ( user ) {

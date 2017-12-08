@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit {
       if (regExp.test(controls.value)) {
         return null;
       } else {
-        return { 'validateUsernamse': true };
+        return { 'validateUsername': true };
       }
     }
 
@@ -125,9 +125,11 @@ export class RegisterComponent implements OnInit {
         if (!data.success) {
           this.emailValid = false;
           this.emailMessage = data.message;
+          console.log(data.message);
         } else {
           this.emailValid = true;
           this.emailMessage = data.message;
+          console.log(data.message);
         }
       });
     }
@@ -138,9 +140,11 @@ export class RegisterComponent implements OnInit {
         if (!data.success) {
           this.usernameValid = false;
           this.usernameMessage = data.message;
+          console.log(data);
         } else {
           this.usernameValid = true;
           this.usernameMessage = data.message;
+          console.log(data.message);
         }
       });
     }
