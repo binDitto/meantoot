@@ -10,6 +10,8 @@ import { FlashMessagesService } from 'angular2-flash-messages'; // <-- npm insta
 })
 export class NavbarComponent implements OnInit {
 
+  username;
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -17,6 +19,9 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.getProfile().subscribe(profile => {
+      this.username = profile.user.username;
+    });
   }
 
   // LOGOUT NAV

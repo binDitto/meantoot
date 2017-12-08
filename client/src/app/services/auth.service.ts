@@ -54,4 +54,25 @@ export class AuthService {
     this.user = null;
     localStorage.clear();
   }
+
+// PROFILE GET API
+  getProfile() {
+    this.createAuthHeaders();
+    return this.http.get(this.backend + '/authentication/profile', this.options).map(res => res.json());
+  }
+    // -- create headers to send with get profile req to backend, and token
+    loadToken() {
+      const token = localStorage.getItem('token');
+      this.authToken = token;
+    }
+
+    createAuthHeaders() {
+      this.loadToken();
+      this.options = new RequestOptions({
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          'authorization': this.authToken
+        })
+      });
+    }
 }
