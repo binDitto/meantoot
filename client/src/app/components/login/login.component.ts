@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 // REACTIVE FORM BUILDER IMPORTS
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { AuthGuard } from '../../guards/auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -25,14 +26,21 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authGuard: AuthGuard
 
   ) {
     this.createForm();
   }
 
-  // RECORD REDIRECT URL - url user was on before logging in
+  // RECORD REDIRECT URL USING AUTHGUARD - url user was on before logging in
   ngOnInit() {
+    if (this.authGuard.redirectUrl) {
+      this.messageClass = 'alert alert-danger';
+      this.message = 'You must be logged in to view that page.';
+      this.previousUrl = this.authGuard.redirectUrl;
+      this.authGuard.redirectUrl = undefined;
+    }
   }
 
   // INITIALIZE FORM

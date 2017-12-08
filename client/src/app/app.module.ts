@@ -1,3 +1,5 @@
+import { NotAuthGuard } from './guards/notAuth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -33,7 +35,7 @@ import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messag
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService, FlashMessagesService],
+  providers: [AuthService, FlashMessagesService, AuthGuard, NotAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
