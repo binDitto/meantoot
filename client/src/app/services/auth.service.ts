@@ -48,4 +48,10 @@ export class AuthService {
   loggedIn() {
     return tokenNotExpired(); // <-- npm install angular2-jwt --save | to use
   }
+
+  logOut() {
+    this.authToken = null;
+    this.user = null;
+    localStorage.clear();
+  }
 }
