@@ -16,6 +16,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+import { BlogComponent } from './components/blog/blog.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messag
     DashboardComponent,
     LoginComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,

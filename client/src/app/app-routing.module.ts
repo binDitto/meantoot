@@ -1,3 +1,4 @@
+import { BlogComponent } from './components/blog/blog.component';
 import { NotAuthGuard } from './guards/notAuth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard]},
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'blog', component: BlogComponent},
   // Any unspecifed route entered in browser will redirect to HomeComponent
   { path: '**', component: HomeComponent }
 ];

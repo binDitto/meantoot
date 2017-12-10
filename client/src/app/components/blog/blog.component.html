@@ -1,0 +1,81 @@
+
+<!-- <div class="row show-hide-message">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div> -->
+
+<div class="col-md-8 col-md-offset-2">
+<h1 class="page-header">Blog Feed</h1>
+
+<button class="btn btn-warning" type="button" name="button"
+*ngIf="!newPost" (click)="newBlogForm()">New Post</button>
+
+<button class="btn btn-default" type="button" name="button"
+*ngIf="!newPost" (click)="reloadFeed()" [disabled]="loadingFeed">
+  <span class="glypicon glyphicon-repeat"></span>
+  Reload</button>
+<br>
+<br>
+  <div *ngIf="!newPost">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Post Title</h3>
+      </div>
+      <div class="panel-body">
+        SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXTSAMPLE TEXTSAMPLE TEXT SAMPLE TEXTSAMPLE TEXTSAMPLE TEXT SAMPLE TEXT SAMPLE TEXT.
+      </div>
+      <!-- footer start -->
+      <div class="panel-footer">
+         <strong>Posted by:</strong> binditto
+         <br>
+         <strong>Date:</strong>Dec 09, 2017
+        <div>
+           <strong>Likes: </strong>25
+           <br>
+           <strong>Dislikes: </strong>22
+        </div>
+        <a href=""><button type="button" name="button" class="btn btn-sm btn-info">Edit</button></a>
+        <a href=""><button type="button" name="button" class="btn btn-sm btn-danger">Delete</button></a>
+        <br>
+        <!-- likes dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-success dropdown-toggle" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">
+            <span class="glyphicon glyphicon-thumbs-up"></span> Likes: 21
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownLink">
+            <li class="dropdown-item"><a href="">binditto</a></li>
+            <li class="dropdown-item"><a href="">naditnho</a></li>
+            <li class="dropdown-item"><a href="">zaian</a></li>
+          </ul>
+        </div>
+        <!-- end likes dropdown -->
+        <!-- dislikes dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-danger dropdown-toggle" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">
+            <span class="glyphicon glyphicon-thumbs-down"></span> Likes: 21
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownLink">
+            <li class="dropdown-item"><a href="">zaian2</a></li>
+          </ul>
+        </div>
+        <!-- end dislikes dropdown -->
+      </div>
+      <!-- footer end -->
+      <ul class="list-group">
+        <li class="list-group-item">
+          <button class="btn btn-sm btn-danger" type="button" name="button"
+          (click)="draftComment()">Post Comment</button>
+          <br>
+          <!-- <form action="">
+            <textarea name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
+            <button type="button" name="button" class="btn btn-sm btn-info">Submit Post</button>
+            <button type="button" name="button" class="btn btn-sm btn-danger">Cancel</button>
+          </form> -->
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</div>
