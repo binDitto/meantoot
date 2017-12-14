@@ -1,3 +1,4 @@
+import { BlogService } from './services/blog.service';
 import { NotAuthGuard } from './guards/notAuth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
@@ -37,7 +38,7 @@ import { BlogComponent } from './components/blog/blog.component';
     HttpModule,
     FlashMessagesModule
   ],
-  providers: [AuthService, FlashMessagesService, AuthGuard, NotAuthGuard],
+  providers: [AuthService, FlashMessagesService, AuthGuard, NotAuthGuard, BlogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

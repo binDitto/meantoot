@@ -138,19 +138,19 @@ module.exports = (router) => {
     });
 
 // HEADER & TOKEN MIDDLEWARE
-    // router.use((req, res, next) => {
-    //     const token = req.headers['authorization'];
-    //     if (!token) {
-    //         return res.json({ success: false, message: 'No token provided'});
-    //     }
+    router.use((req, res, next) => {
+        const token = req.headers['authorization'];
+        if (!token) {
+            return res.json({ success: false, message: 'No token provided'});
+        }
 
-    //     jwt.verify(token, config.secret, ( err, decoded ) => {
-    //         if (err) { return res.json({ success: false, message: 'Token invalid: ' + err})};
-    //         // Set req.decoded to be decoded token(user) for use by other endpoints
-    //         req.decoded = decoded;
-    //         next();
-    //     });
-    // });
+        jwt.verify(token, config.secret, ( err, decoded ) => {
+            if (err) { return res.json({ success: false, message: 'Token invalid: ' + err})};
+            // Set req.decoded to be decoded token(user) for use by other endpoints
+            req.decoded = decoded;
+            next();
+        });
+    });
 
 // PROFILE - get user info
     router.get('/profile', (req, res) => {

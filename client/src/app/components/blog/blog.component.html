@@ -1,9 +1,9 @@
 
-<!-- <div class="row show-hide-message">
+<div class="row show-hide-message" *ngIf="message && newPost">
   <div [ngClass]="messageClass">
     {{ message }}
   </div>
-</div> -->
+</div>
 
 <div class="col-md-8 col-md-offset-2">
 <h1 class="page-header">Blog Feed</h1>
@@ -17,6 +17,56 @@
   Reload</button>
 <br>
 <br>
+
+ <!-- NEW BLOG FORM -->
+ <form [formGroup]="form" name="blogForm" (submit)="onBlogSubmit()" *ngIf="newPost">
+  <div class="form-group">
+    <!-- title -->
+    <label for="title">Title</label>
+    <div [ngClass]="{
+      'has-success': form.controls.title.valid,
+      'has-error': form.controls.title.dirty && form.controls.title.errors
+    }">
+      <input type="text" name="title" placeholder="*Blog Title" autocomplete="off" formControlName="title" class="form-control">
+      <ul class="help-block">
+        <li  class="list-group-item" *ngIf="form.controls.title.dirty && form.controls.title.errors?.required">
+          This field is required.
+        </li>
+        <li class="list-group-item" *ngIf="(form.controls.title.dirty && form.controls.title.errors?.minlength) ||
+        (form.controls.title.dirty && form.controls.title.errors?.maxlength)">
+          Max length: 50, Min length: 5
+        </li>
+        <li class="list-group-item" *ngIf="form.controls.title.dirty && form.controls.title.errors?.alphaNumericValidation">
+          Must be a letter or number.
+        </li>
+      </ul>
+    </div>
+    <!-- title end -->
+    <!-- body -->
+    <label for="body">Body</label>
+    <div [ngClass]="{
+      'has-success': form.controls.body.valid,
+      'has-error': form.controls.body.dirty && form.controls.body.errors
+    }">
+    <textarea name="body" placeholder="*Body" formControlName="body" class="form-control" id="" cols="30" rows="10"></textarea>
+      <ul class="help-block">
+        <li  class="list-group-item" *ngIf="form.controls.body.dirty && form.controls.body.errors?.required">
+          This field is required.
+        </li>
+        <li class="list-group-item" *ngIf="(form.controls.body.dirty && form.controls.body.errors?.minlength) ||
+        (form.controls.body.dirty && form.controls.body.errors?.maxlength)">
+          Max length: 500, Min length: 5
+        </li>
+      </ul>
+    </div>
+    <!-- body end -->
+    <button type="button" name="button"  class="btn btn-warning" (click)="goBack()" [disabled]="processing">Go Back</button>
+    <button type="submit" name="button"  class="btn btn-success" [disabled]="processing || !form.valid">Submit</button>
+  </div>
+ </form>
+ <!-- NEW BLOG FORM END -->
+
+
   <div *ngIf="!newPost">
     <div class="panel panel-primary">
       <div class="panel-heading">
