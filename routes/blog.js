@@ -55,5 +55,22 @@ module.exports = (router) => {
         }).sort({'_id': -1}); // sort in descending order, so newest ones first -1
     });
 
+// GET BLOG
+    router.get('/singleBlog/:id', (req, res) => {
+        if ( !req.params.id ) {
+            return res.json({ success: false, message: 'No Blog Id was provided'});
+        }
+        // res.send('test');
+        Blog.findOne({ _id: req.params.id }, (err, blog) => {
+            if (err) {
+                return res.json({ success: false, message: 'Error', error: err });
+            }
+            if (!blog) {
+                return res.json({ success: false, message: 'Blog not found.'});
+            }
+            return res.json({ success: true, blog: blog});
+        });
+    });
+
     return router;
 }

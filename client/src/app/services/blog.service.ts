@@ -34,4 +34,10 @@ export class BlogService {
     this.createAuthHeaders();
     return this.http.get(this.backend + '/blogs/allBlogs', this.options).map( res => res.json());
   }
+
+  // GET BLOG (GET)
+  getSingleBlog(id) {
+    this.createAuthHeaders();
+    return this.http.get(this.backend + '/blogs/singleBlog/' + id, this.options).map( res => res.json());
+  }
 }
