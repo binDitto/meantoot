@@ -28,4 +28,10 @@ export class BlogService {
     this.createAuthHeaders();
     return this.http.post(this.backend + '/blogs/newblog', blog, this.options).map(res => res.json());
   }
+
+  // GET BLOGS (GET)
+  getAllBlogs(){
+    this.createAuthHeaders();
+    return this.http.get(this.backend + '/blogs/allBlogs', this.options).map( res => res.json());
+  }
 }

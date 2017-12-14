@@ -4,8 +4,9 @@
     <strong>Bin Tran</strong>
   </p>
   <div>
-    <a routerLink="/register" class="btn btn-primary">Register</a>
-    <a href="#" routerLink="/login" class="btn btn-default">Login</a>
+    <a *ngIf="!this.authService.loggedIn()" routerLink="/register" class="btn btn-primary">Register</a>
+    <a *ngIf="!this.authService.loggedIn()" href="#" routerLink="/login" class="btn btn-default">Login</a>
+    <a *ngIf="this.authService.loggedIn()" href="#" routerLink="/blog" class="btn btn-success">View Blogs</a>
   </div>
 </div>
 

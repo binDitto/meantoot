@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 
 // USE ANGULAR HTTP TO SPEAK TO BACKEND
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -14,6 +14,7 @@ export class AuthService {
   options;
   user; // <-- will be set to current logged in user
   authToken; // <-- will be set to current logged in user token
+  @Output() getUsername: EventEmitter<string> = new EventEmitter(); // Will Emit the username for components to "listen" or "subscribe" to.
 
   // Remember to also import httpmodule in appmodule to make http work.
   constructor(
@@ -37,12 +38,14 @@ export class AuthService {
   login(user) {
     return this.http.post(this.backend + '/authentication/login', user).map(res => res.json());
   }
+
   // -- store user data.token in browser's localStorage for use
   storeUserData(token, user) {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     this.authToken = token;
     this.user = user;
+    this.getUsername.emit(user.username); // Activate emitting of logged in user username
   }
   // -- check function for checking if user is logged in
   loggedIn() {

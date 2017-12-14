@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard]},
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'blog', component: BlogComponent},
+  { path: 'blog', component: BlogComponent, canActivate: [AuthGuard]}, // make it so only signed in users can see
   // Any unspecifed route entered in browser will redirect to HomeComponent
   { path: '**', component: HomeComponent }
 ];

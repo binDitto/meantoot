@@ -68,50 +68,55 @@
 
 
   <div *ngIf="!newPost">
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" *ngFor="let blog of listOfBlogs">
       <div class="panel-heading">
-        <h3 class="panel-title">Post Title</h3>
+        <h3 class="panel-title">{{blog.title}}</h3>
       </div>
       <div class="panel-body">
-        SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXTSAMPLE TEXTSAMPLE TEXT SAMPLE TEXTSAMPLE TEXTSAMPLE TEXT SAMPLE TEXT SAMPLE TEXT.
+        {{blog.body}}
       </div>
       <!-- footer start -->
       <div class="panel-footer">
-         <strong>Posted by:</strong> binditto
+         <strong>Posted by:</strong> {{blog.createdBy}}
          <br>
-         <strong>Date:</strong>Dec 09, 2017
+         <strong>Date:</strong> {{blog.createdAt | date: 'MMM dd, yyyy'}}
+        <!-- <div *ngIf="!username === blog.createdBy"> -->
         <div>
-           <strong>Likes: </strong>25
+           <strong>Likes: </strong> {{blog.likes}}
            <br>
-           <strong>Dislikes: </strong>22
+           <strong>Dislikes: </strong> {{blog.dislikes}}
         </div>
-        <a href=""><button type="button" name="button" class="btn btn-sm btn-info">Edit</button></a>
-        <a href=""><button type="button" name="button" class="btn btn-sm btn-danger">Delete</button></a>
         <br>
+        <a [routerLink]="['/edit-blog/', blog._id]" *ngIf="username === blog.createdBy"><button type="button" name="button" class="btn btn-sm btn-info">Edit</button></a>
+        <a [routerLink]="['/delete-blog/', blog._id]" *ngIf="username === blog.createdBy"><button type="button" name="button" class="btn btn-sm btn-danger">Delete</button></a>
+
         <!-- likes dropdown -->
         <div class="dropdown">
-          <button class="btn btn-sm btn-success dropdown-toggle" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">
-            <span class="glyphicon glyphicon-thumbs-up"></span> Likes: 21
+          <button
+          *ngIf="username !== blog.createdBy"
+          class="btn btn-sm btn-success dropdown-toggle" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">
+            <span class="glyphicon glyphicon-thumbs-up"></span> Likes: {{blog.likes}}
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownLink">
-            <li class="dropdown-item"><a href="">binditto</a></li>
-            <li class="dropdown-item"><a href="">naditnho</a></li>
-            <li class="dropdown-item"><a href="">zaian</a></li>
+          <ul class="dropdown-menu" aria-labelledby="dropdownLink" *ngIf="blog.likedBy.length > 0">
+            <li class="dropdown-item" *ngFor="let liked of blog.likedBy"><a href="">{{liked}}</a></li>
           </ul>
         </div>
         <!-- end likes dropdown -->
         <!-- dislikes dropdown -->
         <div class="dropdown">
-          <button class="btn btn-sm btn-danger dropdown-toggle" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">
-            <span class="glyphicon glyphicon-thumbs-down"></span> Likes: 21
+          <button
+           *ngIf="username !== blog.createdBy"
+          class="btn btn-sm btn-danger dropdown-toggle" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">
+            <span class="glyphicon glyphicon-thumbs-down"></span> Dislikes: {{blog.dislikes}}
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownLink">
-            <li class="dropdown-item"><a href="">zaian2</a></li>
+          <ul class="dropdown-menu" aria-labelledby="dropdownLink" *ngIf="blog.dislikedBy.length > 0">
+            <li class="dropdown-item" *ngFor="let disliked of blog.dislikedBy"><a href="">{{disliked}}</a></li>
           </ul>
         </div>
         <!-- end dislikes dropdown -->
       </div>
       <!-- footer end -->
+
       <ul class="list-group">
         <li class="list-group-item">
           <button class="btn btn-sm btn-danger" type="button" name="button"

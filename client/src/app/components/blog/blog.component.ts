@@ -17,6 +17,7 @@ export class BlogComponent implements OnInit {
   form;
   processing = false;
   username;
+  listOfBlogs;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,13 +25,10 @@ export class BlogComponent implements OnInit {
     private blogService: BlogService
   ) {
     this.createNewBlogForm(); // When component loads function will activate and form will create
+
   }
 
-  ngOnInit() {
-    this.authService.getProfile().subscribe(profile => {
-      this.username = profile.user.username;
-    });
-  }
+
 
   // CREATE BLOG
   createNewBlogForm() {
@@ -75,6 +73,7 @@ export class BlogComponent implements OnInit {
   reloadFeed() {
     this.loadingFeed = true;
     // Get all blogs - 4 sec break disable button so they can't spam reload
+    this.getAllBlogs();
     setTimeout(() => {
       this.loadingFeed = false;
     }, 4000);
@@ -106,6 +105,7 @@ export class BlogComponent implements OnInit {
       } else {
         this.messageClass = 'alert alert-success';
         this.message = data.message;
+        this.getAllBlogs(); // THIS WILL REFRESH THE LIST OF BLOGS
         setTimeout(() => {
           this.newPost = false;
           this.processing = false;
@@ -120,5 +120,19 @@ export class BlogComponent implements OnInit {
   // GO BACK
   goBack() {
     window.location.reload(); // basically refreshes page.
+  }
+
+  // GET BLOGS
+  getAllBlogs() {
+    this.blogService.getAllBlogs().subscribe(jsondata => {
+      return this.listOfBlogs = jsondata.blogs;
+    });
+  }
+
+  ngOnInit() {
+    this.authService.getProfile().subscribe(profile => {
+      this.username = profile.user.username;
+    });
+    this.getAllBlogs();
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages'; // <-- npm install angular2-flash-messages --save
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-navbar',
@@ -19,16 +20,15 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.authService.loggedIn()) {
-      this.authService.getProfile().subscribe(profile => {
-        this.username = profile.user.username;
-      });
-    }
+    this.authService.getUsername.subscribe( name => {
+      this.username = name;
+    });
   }
 
   // LOGOUT NAV
   onLogoutClick() {
     this.authService.logOut();
+    this.username = null;
     this.flashMsg.show('You are logged out', { cssClass: 'alert-info'});
     this.router.navigate(['/']);
   }

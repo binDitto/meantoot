@@ -41,5 +41,19 @@ module.exports = (router) => {
         });
     });
 
+// GET BLOGS
+    router.get('/allBlogs', (req,res)=> {
+        Blog.find({}, (err, blogs) => {
+            if (err) {
+                return res.json({success: false, message: 'Error retrieving blogs', err});
+            }
+            if (!blogs) {
+                return res.json({ success: false, message: 'No blogs found.'});
+            }
+
+            return res.json({ success: true, message: 'Blogs retrieved', blogs: blogs });
+        }).sort({'_id': -1}); // sort in descending order, so newest ones first -1
+    });
+
     return router;
 }
