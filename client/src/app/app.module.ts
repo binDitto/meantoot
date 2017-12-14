@@ -14,7 +14,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'; // Reactive and Template forms
 import { HttpModule } from '@angular/http';
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 import { BlogComponent } from './components/blog/blog.component';
@@ -38,7 +38,8 @@ import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.compone
     AppRoutingModule,
     ReactiveFormsModule,
     HttpModule,
-    FlashMessagesModule
+    FlashMessagesModule,
+    FormsModule
   ],
   providers: [AuthService, FlashMessagesService, AuthGuard, NotAuthGuard, BlogService],
   bootstrap: [AppComponent]

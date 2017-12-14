@@ -1,3 +1,29 @@
-<p>
-  edit-blog works!
-</p>
+<h1 class="page-header">Edit Blog</h1>
+
+
+<div class="row show-hide-message">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+
+<form (click)="updateBlogSubmit()">
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input [disabled]="processing" type="text" name="title" placeholder="*Blog Title" class="form-control" [(ngModel)]="blog.title">
+  </div>
+
+  <div class="form-group">
+    <label for="body">Body</label>
+    <textarea [disabled]="processing" rows="8" cols="80" name="body" placeholder="*Blog Body" class="form-control" [(ngModel)]="blog.body"> </textarea>
+
+    <a [routerLink]="['/delete-blog/', blog._id]">
+      <button [disabled]="processing" type="button" name="button" class="btn btn-danger">Delete</button>
+      <button [disabled]="processing" type="button" name="button" class="btn btn-success" (click)="goBack()">Go Back</button>
+      <button [disabled]="processing" type="submit" name="save" class="btn btn-info" (click)="goBack()">Save Changes</button>
+    </a>
+  </div>
+
+</form>
