@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 import { BlogComponent } from './components/blog/blog.component';
+import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { BlogComponent } from './components/blog/blog.component';
     LoginComponent,
     ProfileComponent,
     RegisterComponent,
-    BlogComponent
+    BlogComponent,
+    EditBlogComponent
   ],
   imports: [
     BrowserModule,
