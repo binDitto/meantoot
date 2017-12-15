@@ -23,7 +23,7 @@ export class BlogService {
     });
   }
 
-  // CREATE BLOG (POST)
+  // POST BLOG (POST)
   newBlog(blog) {
     this.createAuthHeaders();
     return this.http.post(this.backend + '/blogs/newblog', blog, this.options).map(res => res.json());
@@ -39,5 +39,11 @@ export class BlogService {
   getSingleBlog(id) {
     this.createAuthHeaders();
     return this.http.get(this.backend + '/blogs/singleBlog/' + id, this.options).map( res => res.json());
+  }
+
+  // PUT BLOG (UPDATE)
+  editBlog(blog) {
+    this.createAuthHeaders();
+    return this.http.put(this.backend + '/blogs/updateBlog', blog, this.options ).map(res => res.json());
   }
 }

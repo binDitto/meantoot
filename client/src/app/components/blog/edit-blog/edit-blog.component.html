@@ -8,7 +8,7 @@
 </div>
 
 
-<form (click)="updateBlogSubmit()" *ngIf="!loading">
+<form (submit)="updateBlogSubmit()" *ngIf="!loading">
 
   <div class="form-group">
     <label for="title">Title</label>
@@ -21,9 +21,12 @@
 
     <a [routerLink]="['/delete-blog/', blog._id]">
       <button [disabled]="processing" type="button" name="button" class="btn btn-danger">Delete</button>
-      <button [disabled]="processing" type="button" name="button" class="btn btn-success" (click)="goBack()">Go Back</button>
-      <button [disabled]="processing" type="submit" name="save" class="btn btn-info" (click)="goBack()">Save Changes</button>
     </a>
+
+      <button [disabled]="processing" type="button" name="button" class="btn btn-success" (click)="goBack()">Go Back</button>
+
+      <button [disabled]="processing || (!title.dirty && !body.dirty)" type="submit" name="save" class="btn btn-info" >Save Changes</button>
+
   </div>
 
 </form>

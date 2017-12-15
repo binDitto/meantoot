@@ -68,7 +68,57 @@ module.exports = (router) => {
             if (!blog) {
                 return res.json({ success: false, message: 'Blog not found.'});
             }
+        User.findOne({ _id: req.decoded.userId }, (err, user) => {
+            if (err) {
+                return res.json({ success: false, message: err});
+            }
+            if (!user) {
+                return res.json({ success: false, message: 'unable to authenticate user'});
+            }
+            if (user.username !== blog.createdBy) {
+                return res.json({ success: false, message: 'You are not authorized to edit this blog.'});
+            }
             return res.json({ success: true, blog: blog});
+        });
+        });
+    });
+
+// PUT BLOG (Update)
+    router.put('/updateBlog', (req, res) => {
+        // res.send('test');
+        if (!req.body._id) {
+            return res.json({ success: false, message: 'No blog id provided'});
+        }
+        Blog.findOne({ _id: req.body._id }, (err, blog) => {
+            if (err) {
+                return res.json({success: false, message: 'Not a valid blog id'});
+            }
+            if (!blog) {
+                return res.json({ success: false, message: 'Blog id was not found'});
+            }
+            User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                if ( err ) {
+                    return res.json({ success: false, message: err });
+                }
+                if (!user) {
+                    return res.json({ success: false, message: 'Unable to authenticate user.'});
+                }
+                if (user.username !== blog.createdBy) {
+                    return res.json({ success: false, message: 'You are not authroized to edit this blog post.'});
+                }
+                blog.title = req.body.title;
+                blog.body = req.body.body;
+                blog.save((err, updatedBlog) => {
+                    if (err) {
+                        return res.json({ success: false, message: err });
+                    }
+                    if (!updatedBlog) {
+                        return res.json({ success: false, message: 'Unable to update blog post'});
+                    }
+                    // The FINAL response we are looking for
+                    return res.json({ success: true, message: 'Blog successfully updated', updatedBlog: updatedBlog});
+                });
+            });
         });
     });
 

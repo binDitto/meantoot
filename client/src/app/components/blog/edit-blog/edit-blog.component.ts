@@ -2,7 +2,7 @@ import { BlogService } from './../../../services/blog.service';
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router'; // allow to pull the current link
+import { ActivatedRoute, Router } from '@angular/router'; // allow to pull the current link
 
 @Component({
   selector: 'app-edit-blog',
@@ -13,10 +13,7 @@ export class EditBlogComponent implements OnInit {
 
   message;
   messageClass;
-  blog = {
-    title: String,
-    body: String,
-  };
+  blog;
   processing = false;
   currentUrl;
   loading = true;
@@ -24,7 +21,8 @@ export class EditBlogComponent implements OnInit {
   constructor(
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -41,7 +39,20 @@ export class EditBlogComponent implements OnInit {
   }
 
   updateBlogSubmit() {
-
+    this.processing = true; // disables form
+    this.blogService.editBlog(this.blog).subscribe(data => {
+      if (!data.success) {
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+        this.processing = false;
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+        setTimeout(() => {
+          this.router.navigate(['/blog']);
+        }, 2000);
+      }
+    });
   }
 
   goBack() {
