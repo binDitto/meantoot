@@ -45,13 +45,12 @@ export class EditBlogComponent implements OnInit {
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
         this.processing = false;
-      } else {
+      }
         this.messageClass = 'alert alert-success';
         this.message = data.message;
         setTimeout(() => {
           this.router.navigate(['/blog']);
         }, 2000);
-      }
     });
   }
 

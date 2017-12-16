@@ -87,6 +87,7 @@ module.exports = (router) => {
     router.put('/updateBlog', (req, res) => {
         // res.send('test');
         if (!req.body._id) {
+            console.log('No blog id provided');
             return res.json({ success: false, message: 'No blog id provided'});
         }
         Blog.findOne({ _id: req.body._id }, (err, blog) => {
@@ -122,5 +123,39 @@ module.exports = (router) => {
         });
     });
 
+// DELETE BLOG
+    router.delete('/deleteBlog/:id', (req, res) => {
+        if (!req.params.id) {
+            return res.json({ success: false, message: 'No id provided '});
+        } else {
+            Blog.findOne({ _id: req.params.id }, (err, blog) => {
+                if (err) {
+                    return res.json({ success: false, message: 'Invalid id'});
+                }
+                if (!blog) {
+                    return res.json({ success: false, message: 'Blog was not found'});
+                }
+                User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                    if (err) {
+                        return res.json({success: false, message: err});
+                    }
+                    if (!user) {
+                        return res.json({ success: false, message: 'Unable to authenticate user.'});
+                    }
+                    if (user.username !== blog.createdBy) {
+                        return res.json({ success: false, message: 'You are not authorized to delete this blog post'});
+                    }
+
+                    blog.remove((err, blog) => {
+                        if (err) {
+                            return res.json({ success: false, message: err });
+                        }
+                        // DELETE SUCCESS
+                        return res.json({ success: true, message: 'Blog deleted!'});
+                    });
+                });
+            });
+        }
+    });
     return router;
 }

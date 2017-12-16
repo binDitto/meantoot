@@ -9,7 +9,7 @@ export class BlogService {
   backend = this.authService.backend;
 
   constructor(
-    private authService: AuthService,,
+    private authService: AuthService,
     private http: Http
   ) { }
 
