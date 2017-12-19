@@ -19,6 +19,7 @@ import { HttpModule } from '@angular/http';
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 import { BlogComponent } from './components/blog/blog.component';
 import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.component';
+import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.compone
     ProfileComponent,
     RegisterComponent,
     BlogComponent,
-    EditBlogComponent
+    EditBlogComponent,
+    DeleteBlogComponent
   ],
   imports: [
     BrowserModule,

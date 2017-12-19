@@ -1,4 +1,5 @@
 import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.component';
+import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.component';
 import { BlogComponent } from './components/blog/blog.component';
 import { NotAuthGuard } from './guards/notAuth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'blog', component: BlogComponent, canActivate: [AuthGuard]}, // make it so only signed in users can see
   { path: 'edit-blog/:id', component: EditBlogComponent, canActivate: [AuthGuard]},
+  { path: 'delete-blog/:id', component: DeleteBlogComponent, canActivate: [AuthGuard]},
   // Any unspecifed route entered in browser will redirect to HomeComponent
   { path: '**', component: HomeComponent }
 ];

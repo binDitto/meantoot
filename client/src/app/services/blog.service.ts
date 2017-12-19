@@ -46,4 +46,9 @@ export class BlogService {
     this.createAuthHeaders();
     return this.http.put(this.backend + '/blogs/updateBlog', blog, this.options ).map(res => res.json());
   }
+
+  deleteBlog(id) {
+    this.createAuthHeaders();
+    return this.http.delete(this.backend + '/blogs/deleteBlog/' + id, this.options).map(res => res.json());
+  }
 }
