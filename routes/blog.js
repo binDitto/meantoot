@@ -15,7 +15,7 @@ module.exports = (router) => {
             return res.json({ success: false, message: 'Blog body is required.'});
         }
         if (!req.body.createdBy) {
-            return res.json({ success: false, message: 'Blog creator is required.'})
+            return res.json({ success: false, message: 'Blog creator is required.'});
         }
         // ALL FIELDS FILLED
         const blog = new Blog({
@@ -157,5 +157,108 @@ module.exports = (router) => {
             });
         }
     });
+
+    // PUT LIKES
+    router.put('/likeBlog', (req, res) => {
+        if (!req.body.id) {
+            return res.json({success: false, message: 'No id was provided'});
+        }
+        Blog.findOne({ _id: req.body.id }, (err, blog) => {
+            if (err) {
+                return res.json({success: false, message: 'Invalid blog id' });
+            }
+            if (!blog) {
+                return res.json({ success: false, message: 'That blog was not found'});
+            }
+            User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                if (err) {
+                    return res.json({ success: false, message: 'Something went wrong'});
+                }
+                if (!user) {
+                    return res.json({ success: false, message: 'Could not authenticate user'});
+                }
+                if (user.username === blog.createdBy) {
+                    return res.json({ success: false, message: 'Cannot like your own post.'});
+                }
+                if (blog.likedBy.includes(user.username)) {
+                    return res.json({ success: false, message: 'You already liked this post'});
+                }
+                if (blog.dislikedBy.includes(user.username)) {
+                    blog.dislikes --;
+                    const arrayIndex = blog.dislikedBy.indexOf(user.username);
+                    // delete from the index specified, and just 1
+                    blog.dislikedBy.splice(arrayIndex, 1);
+                    blog.likes ++;
+                    blog.likedBy.push(user.username);
+                    blog.save((err, savedBlog) => {
+                        if (err) {
+                            return res.json({ success: false, message: 'Something went wrong'});
+                        }
+                        return res.json({ success: true, message: 'Blog liked!'});
+                    });
+                }
+                // If everything went well, and user has not liked this post before or disliked this post before, like will be added.
+                blog.likes ++;
+                blog.likedBy.push(user.username);
+                blog.save((err, savedBlog) => {
+                    if (err) {
+                        return res.json({ success: false, message: 'Something went wrong'});
+                    }
+                    return res.json({ success: true, message: 'Blog liked'});
+                });
+            });
+        });
+    });
+    // PUT DISLIKES
+    router.put('/dislikeBlog', (req, res) => {
+        if (!req.body.id) {
+            return res.json({success: false, message: 'No id was provided'});
+        }
+        Blog.findOne({ _id: req.body.id }, (err, blog) => {
+            if (err) {
+                return res.json({success: false, message: 'Invalid blog id' });
+            }
+            if (!blog) {
+                return res.json({ success: false, message: 'That blog was not found'});
+            }
+            User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                if (err) {
+                    return res.json({ success: false, message: 'Something went wrong'});
+                }
+                if (!user) {
+                    return res.json({ success: false, message: 'Could not authenticate user'});
+                }
+                if (user.username === blog.createdBy) {
+                    return res.json({ success: false, message: 'Cannot dislike your own post.'});
+                }
+                if (blog.dislikedBy.includes(user.username)) {
+                    return res.json({ success: false, message: 'You already disliked this post'});
+                }
+                if (blog.likedBy.includes(user.username)) {
+                    blog.likes --;
+                    const arrayIndex = blog.likedBy.indexOf(user.username);
+                    // delete from the index specified, and just 1
+                    blog.likedBy.splice(arrayIndex, 1);
+                    blog.dislikes ++;
+                    blog.dislikedBy.push(user.username);
+                    blog.save((err, savedBlog) => {
+                        if (err) {
+                            return res.json({ success: false, message: 'Something went wrong'});
+                        }
+                        return res.json({ success: true, message: 'Blog disliked!'});
+                    });
+                }
+                // If everything went well, and user has not liked this post before or disliked this post before, like will be added.
+                blog.dislikes ++;
+                blog.dislikedBy.push(user.username);
+                blog.save((err, savedBlog) => {
+                    if (err) {
+                        return res.json({ success: false, message: 'Something went wrong'});
+                    }
+                    return res.json({ success: true, message: 'Blog disliked'});
+                });
+            });
+        });
+    });
     return router;
-}
+};
