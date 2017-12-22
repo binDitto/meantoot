@@ -192,20 +192,24 @@ module.exports = (router) => {
                     blog.likedBy.push(user.username);
                     blog.save((err, savedBlog) => {
                         if (err) {
+                            console.log
                             return res.json({ success: false, message: 'Something went wrong'});
                         }
                         return res.json({ success: true, message: 'Blog liked!'});
                     });
+                } else {
+                    // If everything went well, and user has not liked this post before or disliked this post before, like will be added.
+                    blog.likes ++;
+                    blog.likedBy.push(user.username);
+                    blog.save((err, savedBlog) => {
+                        if (err) {
+                            return res.json({ success: false, message: 'Something went wrong'});
+                        }
+                        return res.json({ success: true, message: 'Blog liked'});
+                    
+                
+                     });
                 }
-                // If everything went well, and user has not liked this post before or disliked this post before, like will be added.
-                blog.likes ++;
-                blog.likedBy.push(user.username);
-                blog.save((err, savedBlog) => {
-                    if (err) {
-                        return res.json({ success: false, message: 'Something went wrong'});
-                    }
-                    return res.json({ success: true, message: 'Blog liked'});
-                });
             });
         });
     });
@@ -247,16 +251,17 @@ module.exports = (router) => {
                         }
                         return res.json({ success: true, message: 'Blog disliked!'});
                     });
+                } else {
+                    // If everything went well, and user has not liked this post before or disliked this post before, like will be added.
+                    blog.dislikes ++;
+                    blog.dislikedBy.push(user.username);
+                    blog.save((err, savedBlog) => {
+                        if (err) {
+                            return res.json({ success: false, message: 'Something went wrong'});
+                        }
+                        return res.json({ success: true, message: 'Blog disliked'});
+                    });
                 }
-                // If everything went well, and user has not liked this post before or disliked this post before, like will be added.
-                blog.dislikes ++;
-                blog.dislikedBy.push(user.username);
-                blog.save((err, savedBlog) => {
-                    if (err) {
-                        return res.json({ success: false, message: 'Something went wrong'});
-                    }
-                    return res.json({ success: true, message: 'Blog disliked'});
-                });
             });
         });
     });

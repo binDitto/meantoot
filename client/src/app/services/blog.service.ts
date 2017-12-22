@@ -30,7 +30,7 @@ export class BlogService {
   }
 
   // GET BLOGS (GET)
-  getAllBlogs(){
+  getAllBlogs() {
     this.createAuthHeaders();
     return this.http.get(this.backend + '/blogs/allBlogs', this.options).map( res => res.json());
   }
@@ -50,5 +50,16 @@ export class BlogService {
   deleteBlog(id) {
     this.createAuthHeaders();
     return this.http.delete(this.backend + '/blogs/deleteBlog/' + id, this.options).map(res => res.json());
+  }
+
+  // LIKES
+  likeBlog(id) {
+    const blogData = { id: id };
+    return this.http.put(this.backend + '/blogs/likeBlog/', blogData, this.options).map(res => res.json());
+  }
+  // LIKES
+  dislikeBlog(id) {
+    const blogData = { id: id };
+    return this.http.put(this.backend + '/blogs/dislikeBlog/', blogData, this.options).map(res => res.json());
   }
 }
