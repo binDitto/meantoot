@@ -122,8 +122,8 @@ module.exports = (router) => {
 
         // Fields provided
         User.findOne({ username: req.body.username.toLowerCase() }, ( err, user ) => {
-            if (err) { return res.json({ success: false, message: err })};
-            if (!user) { return res.json({ success: false, message: 'Username or Password does not exist. '})};
+            if (err) { return res.json({ success: false, message: err });};
+            if (!user) { return res.json({ success: false, message: 'Username or Password does not exist. '});};
             // User found - test/compare passwords
             const validPassword = user.comparePassword(req.body.password);
             if (!validPassword) {
@@ -145,7 +145,7 @@ module.exports = (router) => {
         }
 
         jwt.verify(token, config.secret, ( err, decoded ) => {
-            if (err) { return res.json({ success: false, message: 'Token invalid: ' + err})};
+            if (err) { return res.json({ success: false, message: 'Token invalid: ' + err});};
             // Set req.decoded to be decoded token(user) for use by other endpoints
             req.decoded = decoded;
             next();
@@ -162,6 +162,21 @@ module.exports = (router) => {
             if (err) { return res.json({ success: false, message: err }); }
             if (!user) { return res.json({ success: false, message: 'User not found'}); }
 
+            return res.json({ success: true, user: user });
+        });
+    });
+// PUBLIC PROFILE
+    router.get('/publicProfile', (req, res) => {
+        if (!req.params.username) {
+            return res.json({ success: false, message: 'No username was provided'});
+        }
+        User.findOne({ username: req.params.username }, ( err, user) => {
+            if ( err) {
+                return res.json({ success: false, message: 'Something went wrong.' });
+            }
+            if (!user) {
+                return res.json({ success: false, message: 'Username not found.'});
+            }
             return res.json({ success: true, user: user });
         });
     });
