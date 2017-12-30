@@ -97,33 +97,32 @@
         <!-- likes dropdown -->
 
           <!-- like button -->
-          <button
-          *ngIf="username !== blog.createdBy"
-           (mouseover)="showLiker()"
-          (click)="likeBlog(blog._id)"
 
-          [disabled]="blog.likedBy.indexOf(username) > -1"
-          class="btn btn-sm btn-success" type="button" name="button">
-            <span class="glyphicon glyphicon-thumbs-up"></span> Likes: {{blog.likes}}
-          </button>
-          <ul *ngIf="(blog.likedBy.length > 0) && (likerdrop)">
-            <li  *ngFor="let liker of blog.likedBy">
-              <a [routerLink]="['/user/', liker]">{{liker}}</a></li>
-          </ul>
+            <button *ngIf="username !== blog.createdBy"  (mouseenter)="showLiker()" (mouseleave)="hideLikers()" (click)="likeBlog(blog._id)" [disabled]="blog.likedBy.indexOf(username) > -1"
+              class="btn btn-sm btn-success dropdown-toggle" type="button" name="button">
+              <span class="glyphicon glyphicon-thumbs-up"></span> Likes: {{blog.likes}}
+              <ul *ngIf="blog.likedBy.length > 0 && likerdrop" class="list-group likesdrop">
+                <li *ngFor="let liker of blog.likedBy" class="list-group-item">
+                  <a [routerLink]="['/user/', liker]">{{liker}}</a>
+                </li>
+              </ul>
+            </button>
+            <!-- dislike button -->
+            <button *ngIf="username !== blog.createdBy" (click)="dislikeBlog(blog._id)" (mouseenter)="showDisliker()" (mouseleave)="hideLikers()"[disabled]="blog.dislikedBy.indexOf(username) > -1"
+              class="btn btn-sm btn-danger" type="button" name="button">
+              <span class="glyphicon glyphicon-thumbs-down"></span> Dislikes: {{blog.dislikes}}
+              <div class="dislikesdrop">
+                <ul *ngIf="(blog.dislikedBy.length > 0) && (dislikerdrop)" class="list-group dislikesdropper">
+                  <li *ngFor="let disliker of blog.dislikedBy" class="list-group-item">
+                    <a [routerLink]="['/user/', disliker]">{{disliker}}</a>
+                  </li>
+                </ul>
+              </div>
 
-          <!-- dislike button -->
-          <button *ngIf="username !== blog.createdBy" (click)="dislikeBlog(blog._id)"
-          (mouseover)="showDisliker()"
-          [disabled]="blog.dislikedBy.indexOf(username) > -1"
-            class="btn btn-sm btn-danger"
-            type="button" name="button">
-            <span class="glyphicon glyphicon-thumbs-down"></span> Dislikes: {{blog.dislikes}}
-          </button>
-          <ul  *ngIf="(blog.dislikedBy.length > 0) && (dislikerdrop)">
-            <li *ngFor="let disliker of blog.dislikedBy">
-              <a [routerLink]="['/user/', disliker]">{{disliker}}</a>
-            </li>
-          </ul>
+            </button>
+
+
+
 
 
         <!-- end likes dropdown -->

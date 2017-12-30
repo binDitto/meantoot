@@ -145,12 +145,19 @@ export class BlogComponent implements OnInit {
   // SHOW DISLIKER
   showDisliker() {
     this.dislikerdrop = true;
+    this.likerdrop = false;
   }
+
   // SHOW LIKER
   showLiker() {
     this.likerdrop = true;
+    this.dislikerdrop = false;
   }
-
+  // HIDE LIKERS
+  hideLikers(){
+    this.likerdrop = false;
+    this.dislikerdrop = false;
+  }
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
       this.username = profile.user.username;

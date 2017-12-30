@@ -166,7 +166,7 @@ module.exports = (router) => {
         });
     });
 // PUBLIC PROFILE
-    router.get('/publicProfile', (req, res) => {
+    router.get('/publicProfile/:username', (req, res) => {
         if (!req.params.username) {
             return res.json({ success: false, message: 'No username was provided'});
         }

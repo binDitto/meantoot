@@ -1,0 +1,13 @@
+.likesdrop {
+  position: absolute;
+  left: 0;
+  bottom: 50px;
+}
+.dislikesdrop {
+  position: relative;
+}
+.dislikesdropper {
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+}

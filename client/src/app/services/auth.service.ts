@@ -79,4 +79,9 @@ export class AuthService {
         })
       });
     }
+
+    getPublicProfile(username) {
+      this.createAuthHeaders();
+      return this.http.get(this.backend + '/authentication/publicProfile/' + username, this.options).map(res => res.json());
+    }
 }
