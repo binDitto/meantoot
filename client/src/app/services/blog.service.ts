@@ -62,4 +62,12 @@ export class BlogService {
     const blogData = { id: id };
     return this.http.put(this.backend + '/blogs/dislikeBlog/', blogData, this.options).map(res => res.json());
   }
+  postComment( id, comment) {
+    this.createAuthHeaders();
+    const blogData = {
+      id: id,
+      comment: comment
+    };
+    return this.http.post(this.backend + '/blogs/comment', blogData, this.options).map(res => res.json());
+  }
 }

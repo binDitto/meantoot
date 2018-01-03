@@ -192,7 +192,7 @@ module.exports = (router) => {
                     blog.likedBy.push(user.username);
                     blog.save((err, savedBlog) => {
                         if (err) {
-                            console.log
+                            console.log;
                             return res.json({ success: false, message: 'Something went wrong'});
                         }
                         return res.json({ success: true, message: 'Blog liked!'});
@@ -262,6 +262,45 @@ module.exports = (router) => {
                         return res.json({ success: true, message: 'Blog disliked'});
                     });
                 }
+            });
+        });
+    });
+
+    router.post('/comment', (req,res) => {
+        if (!req.body.comment) {
+            return res.json({success: false, message: 'No comment provided'});
+        }
+        if (!req.body.id) {
+            return res.json({ success: false, message: 'No id was provided'});
+        }
+        Blog.findOne({ _id: req.body.id }, (err, blog) => {
+
+            if ( err ) {
+                return res.json({ success: false, message: 'Invalid blog id'});
+            }
+            if ( !blog ) {
+                return res.json({ success: false, message: 'Blog not found'});
+            }
+            
+            User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                if ( err ) { 
+                    return res.json({ success: false, message: 'Something went wrong'});
+                }
+                if (!user) {
+                    return res.json({ success: false, message: 'User not found'});
+                }
+
+                blog.comments.push({
+                    comment: req.body.comment,
+                    commentator: user.username
+                });
+                blog.save((err, blog) => {
+                    if ( err ) {
+                        return res.json({ success: false, message: 'Something went wrong'});
+                    }
+
+                    return res.json({ success: true,  message: 'Comment saved'});
+                });
             });
         });
     });

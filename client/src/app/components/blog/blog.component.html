@@ -130,16 +130,82 @@
       <!-- footer end -->
 
       <ul class="list-group">
-        <li class="list-group-item">
-          <button class="btn btn-sm btn-danger" type="button" name="button"
-          (click)="draftComment()">Post Comment</button>
+
+          <button [disabled]="newComment.indexOf(blog._id) > -1" class="btn btn-sm btn-danger" type="button" name="button" (click)="draftComment(blog._id)">
+            Post Comment
+          </button>
           <br>
-          <!-- <form action="">
-            <textarea name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
-            <button type="button" name="button" class="btn btn-sm btn-info">Submit Post</button>
-            <button type="button" name="button" class="btn btn-sm btn-danger">Cancel</button>
-          </form> -->
-        </li>
+
+          <div *ngIf="newComment.indexOf(blog._id) > -1">
+            <br>
+            <form [formGroup]="commentForm" >
+              <textarea name="comment" id="" cols="30" rows="10" class="form-control" formControlName="comment"></textarea>
+              <div [ngClass]="{'has-success': !commentForm.controls.comment.errros && commentForm.controls.comment.dirty, 'has-error': commentForm.controls.comment.dirty && commentForm.controls.comment.dirty}">
+                <ul class="help-block">
+                  <li *ngIf="commentForm.controls.comment.errors?.required && commentForm.controls.comment.dirty">
+                    This field is required.
+                  </li>
+                  <li *ngIf="(commentForm.controls.comment.errors?.maxLength && commentForm.controls.comment.dirty) ||
+                                       (commentForm.controls.comment.errors?.minLength && commentForm.controls.comment.dirty)">
+                    Comment must be at least 1 character but no more than 200.
+                  </li>
+                </ul>
+              </div>
+              <button [disabled]="!commentForm.valid" (click)="postComment(blog._id)" type="button" name="button" class="btn btn-sm btn-info">
+                Submit Comment
+              </button>
+              <button [disabled]="processing" (click)="cancelSubmission(blog._id)" type="button" name="button" class="btn btn-sm btn-danger">
+                Cancel
+              </button>
+            </form>
+
+          </div>
+
+
+            <h4 *ngIf="blog.comments.length > 0">Comments</h4>
+            <h4 *ngIf="blog.comments.length == 0">No Comments</h4>
+            <li *ngIf="enabledComments.indexOf(blog._id) === -1 && blog.comments.length > 0" class="list-group-item alert alert-success">
+              <span (click)="expand(blog._id)">
+                Show Comments&nbsp;&nbsp;
+                <div class="glyphicon glyphicon-comment"></div>
+              </span>
+            </li>
+            <li *ngIf="enabledComments.indexOf(blog._id) > -1" class="list-group-item alert alert-danger">
+              <span (click)="collapse(blog._id)">
+                Hide Comments&nbsp;&nbsp;
+                <div class="glyphicon glyphicon-comment"></div>
+              </span>
+            </li>
+
+
+
+
+          <div *ngIf="enabledComments.indexOf(blog._id) > -1">
+            <li *ngFor="let comment of blog.comments" class="list-group-item">
+
+
+              <!-- if current user is not blog creator -->
+              <span *ngIf="(username === comment.commentator) && (username !== blog.createdBy)">
+                <strong  class="label label-success"> {{ comment.commentator}}:</strong> {{ comment.comment }}
+              </span>
+              <!-- if current user is also the same as blog creator  -->
+              <span *ngIf="(username === comment.commentator) && (username === blog.createdBy)">
+                <strong  class="label label-success"><div class="glyphicon glyphicon-user"></div> {{ comment.commentator}}:</strong> {{ comment.comment }}
+              </span>
+
+              <!-- if current user is not the same commentator but the same as blog creator -->
+              <span *ngIf="(username !== comment.commentator) && (username === blog.createdBy)">
+                <strong  class="label label-primary"> <div class="glyphicon glyphicon-user"></div> {{ comment.commentator}}:</strong> {{ comment.comment }}
+              </span>
+              <!-- if not the same as blog creator and not the same as commentator  -->
+              <span *ngIf="username !== comment.commentator">
+                <strong  class="label label-danger"> {{ comment.commentator}}:</strong> {{ comment.comment }}
+              </span>
+
+            </li>
+          </div>
+
+
       </ul>
 
     </div>
