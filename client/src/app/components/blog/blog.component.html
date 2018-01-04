@@ -183,23 +183,28 @@
           <div *ngIf="enabledComments.indexOf(blog._id) > -1">
             <li *ngFor="let comment of blog.comments" class="list-group-item">
 
+              <span *ngIf="username === comment.commentator">
 
-              <!-- if current user is not blog creator -->
-              <span *ngIf="(username === comment.commentator) && (username !== blog.createdBy)">
-                <strong  class="label label-success"> {{ comment.commentator}}:</strong> {{ comment.comment }}
-              </span>
-              <!-- if current user is also the same as blog creator  -->
-              <span *ngIf="(username === comment.commentator) && (username === blog.createdBy)">
-                <strong  class="label label-success"><div class="glyphicon glyphicon-user"></div> {{ comment.commentator}}:</strong> {{ comment.comment }}
+                <!-- if current user is not blog creator -->
+                <span *ngIf="username !== blog.createdBy">
+                  <strong  class="label label-success"> {{ comment.commentator}}:</strong> {{ comment.comment }}
+                </span>
+                <!-- if current user is also the same as blog creator  -->
+                <span *ngIf="username === blog.createdBy">
+                  <strong  class="label label-success"><div class="glyphicon glyphicon-user"></div> {{ comment.commentator}}:</strong> {{ comment.comment }}
+                </span>
               </span>
 
-              <!-- if current user is not the same commentator but the same as blog creator -->
-              <span *ngIf="(username !== comment.commentator) && (username === blog.createdBy)">
-                <strong  class="label label-primary"> <div class="glyphicon glyphicon-user"></div> {{ comment.commentator}}:</strong> {{ comment.comment }}
-              </span>
-              <!-- if not the same as blog creator and not the same as commentator  -->
               <span *ngIf="username !== comment.commentator">
-                <strong  class="label label-danger"> {{ comment.commentator}}:</strong> {{ comment.comment }}
+                <!-- if current user is not the same commentator but the same as blog creator -->
+                <span *ngIf="username === blog.createdBy && username !== comment.commentator">
+                  <strong  class="label label-primary"> <div class="glyphicon glyphicon-user"></div> {{ comment.commentator}}:</strong> {{ comment.comment }}
+                </span>
+
+                <!-- if not the same as blog creator and not the same as commentator  -->
+                <span *ngIf="username !== comment.commentator">
+                  <strong  class="label label-danger"> {{ comment.commentator}}:</strong> {{ comment.comment }}
+                </span>
               </span>
 
             </li>
