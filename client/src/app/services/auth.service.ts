@@ -10,7 +10,8 @@ import { tokenNotExpired } from 'angular2-jwt';
 @Injectable()
 export class AuthService {
 
-  backend = 'http://localhost:8080';
+  // backend = 'http://localhost:8080/'; //development
+  backend = '';
   options;
   user; // <-- will be set to current logged in user
   authToken; // <-- will be set to current logged in user token
@@ -23,20 +24,20 @@ export class AuthService {
 
 // REGISTER API - Create User Api
   registerUser(user) {
-    return this.http.post(this.backend + '/authentication/register', user).map(res => res.json());
+    return this.http.post(this.backend + 'authentication/register', user).map(res => res.json());
   }
 
   checkUsername(username) {
-    return this.http.get(this.backend + '/authentication/checkUsername/' + username).map(res => res.json());
+    return this.http.get(this.backend + 'authentication/checkUsername/' + username).map(res => res.json());
   }
 
   checkEmail(email) {
-    return this.http.get(this.backend + '/authentication/checkEmail/' + email).map(res => res.json());
+    return this.http.get(this.backend + 'authentication/checkEmail/' + email).map(res => res.json());
   }
 
 // LOGIN GET API
   login(user) {
-    return this.http.post(this.backend + '/authentication/login', user).map(res => res.json());
+    return this.http.post(this.backend + 'authentication/login', user).map(res => res.json());
   }
 
   // -- store user data.token in browser's localStorage for use
@@ -62,7 +63,7 @@ export class AuthService {
 // PROFILE GET API
   getProfile() {
     this.createAuthHeaders();
-    return this.http.get(this.backend + '/authentication/profile', this.options).map(res => res.json());
+    return this.http.get(this.backend + 'authentication/profile', this.options).map(res => res.json());
   }
     // -- create headers to send with get profile req to backend, and token
     loadToken() {
@@ -82,6 +83,6 @@ export class AuthService {
 
     getPublicProfile(username) {
       this.createAuthHeaders();
-      return this.http.get(this.backend + '/authentication/publicProfile/' + username, this.options).map(res => res.json());
+      return this.http.get(this.backend + 'authentication/publicProfile/' + username, this.options).map(res => res.json());
     }
 }
