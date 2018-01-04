@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ng serve"
+    "start": "ng serve",
+    "build": "cd client && ng build --prod && cd .. && node server.js"
   },
   "repository": {
     "type": "git",

@@ -8,6 +8,9 @@ const bodyParser = require('body-parser'); // transform data to json format
 const cors = require('cors'); // allows cross origin servers to talk to eachother, angular to node server etc.
 
 
+
+// PORT
+const port = process.env.PORT || 8080;
 // Database
 mongoose.Promise = global.Promise;
 mongoose.connect(config.uri, (err) => {
@@ -30,7 +33,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //  Front-end static directory
-app.use(express.static(__dirname + '/client/dist/'));
+app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/client/dist/'));
 
 // Routes
 const auth = require('./routes/auth')(router); // send express router back for usage
@@ -42,12 +46,13 @@ app.use('/blogs', blog);
 // Connect backend server to Angular 2 index.html file
 // also, use * for all  undefined links will point to the index file
 app.get('*', (req, res) => {
-    res.send('hello world!');
+    // res.send('hello world!');
+    res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
 // INITIALIZE SERVER
-app.listen(8080, () => {
-    console.log('Listening on port 8080');
+app.listen(port, () => {
+    console.log('Listening on port' + port);
 });
 
 
